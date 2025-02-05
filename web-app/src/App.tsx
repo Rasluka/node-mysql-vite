@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 // import { useEffect } from "react";
-import { PencilIcon, TrashIcon, UserPlusIcon } from "@heroicons/react/16/solid";
+import {
+  PencilIcon,
+  TrashIcon,
+  UserPlusIcon,
+  XMarkIcon,
+  UserIcon,
+  UserGroupIcon,
+  PhotoIcon,
+  AtSymbolIcon,
+} from "@heroicons/react/16/solid";
 // import {} from "@heroicons/react/16/solid";
 
 interface IUser {
@@ -11,10 +20,10 @@ interface IUser {
 }
 
 function App() {
-  document.title = "User Dashboard!";
+  // document.title = "User Dashboard!";
   const [users, setUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
+  const [isFormVisible, setIsFormVisible] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -48,19 +57,29 @@ function App() {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="mx-auto w-3/6">
-        <div className="flex items-center justify-center mb-4">
-          <UserPlusIcon
-            className="size-12 text-green-600 hover:text-green-500 text-center hover:scale-110 transition-transform duration-300"
-            title="Add new user"
-            onClick={() => setIsFormVisible(!isFormVisible)}
-          />
+      <div className="w-3/6">
+        <div className="flex items-center justify-center">
+          {!isFormVisible ? (
+            <UserPlusIcon
+              className="size-12 text-green-600 hover:text-green-500 active:text-green-400 text-center hover:scale-110 transition-transform duration-300"
+              title="Add new user"
+              onClick={() => setIsFormVisible(!isFormVisible)}
+            />
+          ) : (
+            <XMarkIcon
+              className="size-12 text-red-600 hover:text-red-500 active:text-red-400 text-center hover:scale-110 transition-transform duration-300"
+              title="Add new user"
+              onClick={() => setIsFormVisible(!isFormVisible)}
+            />
+          )}
         </div>
 
         {/* TABLE */}
         <div
-          className={`overflow-x-auto rounded-box border border-base-content/5 bg-base-100 transition-transform duration-300 ${
-            isFormVisible ? "scale-100" : "scale-0"
+          className={`overflow-x-auto rounded-box border border-base-content/5 bg-base-100 transition-all duration-300 ${
+            !isFormVisible
+              ? "opacity-100 scale-100"
+              : "opacity-0 hidden scale-0"
           }`}
         >
           <table className="table">
@@ -84,12 +103,12 @@ function App() {
                     <td>
                       <div className="inline-flex gap-2">
                         <PencilIcon
-                          className="size-6 text-blue-500 hover:text-blue-600 hover:scale-110 transition-transform duration-300"
+                          className="size-6 text-blue-500 hover:text-blue-600 active:text-blue-700 hover:scale-110 transition-transform duration-300"
                           title="Edit"
                         />
 
                         <TrashIcon
-                          className="size-6 text-red-500 hover:text-red-600 hover:scale-110 transition-transform duration-300"
+                          className="size-6 text-red-500 hover:text-red-600 active:text-red-700 hover:scale-110 transition-transform duration-300"
                           title="Delete"
                         />
                       </div>
@@ -103,25 +122,30 @@ function App() {
 
         {/* FORM */}
         <div
-          className={`rounded-box border border-base-content/5 bg-base-100 transition-transform duration-300 ${
-            !isFormVisible ? "scale-100" : "scale-0"
+          className={`rounded-box p-3 border border-base-content/5 bg-base-100 transition- duration-300 ${
+            isFormVisible ? "opacity-100 scale-100" : "opacity-0 hidden scale-0"
           }`}
         >
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">What is your name?</legend>
-            <input type="text" className="input" placeholder="Type here" />
-            <p className="fieldset-label">Optional</p>
-          </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">What is your name?</legend>
-            <input type="text" className="input" placeholder="Type here" />
-            <p className="fieldset-label">Optional</p>
-          </fieldset>
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">What is your name?</legend>
-            <input type="text" className="input" placeholder="Type here" />
-            <p className="fieldset-label">Optional</p>
-          </fieldset>
+          <label className="input">
+            {/* <span className="badge badge-neutral badge-xs">Optional</span> */}
+            <UserIcon className="size-6" />
+            <input type="text" className="grow" placeholder="Firstname" />
+          </label>
+
+          <label className="input">
+            <UserGroupIcon className="size-6" />
+            <input type="text" className="grow" placeholder="Lastname" />
+          </label>
+
+          <label className="input">
+            <PhotoIcon className="size-6" />
+            <input type="text" className="grow" placeholder="Avatar URL" />
+          </label>
+
+          <label className="input">
+            <AtSymbolIcon className="size-6" />
+            <input type="text" className="grow" placeholder="Email" />
+          </label>
         </div>
       </div>
     </div>

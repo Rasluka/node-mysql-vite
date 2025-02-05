@@ -85,9 +85,9 @@ app.get("/users/:id", async (req: Request, res: Response) => {
 // Post API Endpoint
 app.post("/users", async (req: Request, res: Response) => {
   try {
-    const { name, email, age } = req.body;
+    const { firstname, lastname, email, avatar_url } = req.body;
 
-    if (!name || !email || !age) {
+    if (!firstname || !lastname || !email || !avatar_url) {
       throw new Error("One or more missing requirement fields.");
     }
 
